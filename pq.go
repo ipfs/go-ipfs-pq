@@ -1,3 +1,4 @@
+// Package pq implements a priority queue.
 package pq
 
 import "container/heap"
