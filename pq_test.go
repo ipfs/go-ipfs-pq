@@ -53,7 +53,7 @@ func TestCorrectnessOfPop(t *testing.T) {
 	var priorities []int
 	for q.Len() > 0 {
 		i := q.Pop().(*TestElem).Priority
-		t.Log("popped %v", i)
+		t.Logf("popped %v", i)
 		priorities = append(priorities, i)
 	}
 	if !sort.IntsAreSorted(priorities) {
