@@ -13,9 +13,8 @@ type PQ interface {
 	Len() int
 	// Update `fixes` the PQ.
 	Update(index int)
-
-	// TODO  explain why this interface should not be extended
-	// It does not support Remove. This is because...
+	// Remove removes the item at 'index'
+	Remove(index int)
 }
 
 // Elem describes elements that can be added to the PQ. Clients must implement
@@ -58,6 +57,10 @@ func (w *wrapper) Pop() Elem {
 
 func (w *wrapper) Update(index int) {
 	heap.Fix(&w.heapinterface, index)
+}
+
+func (w *wrapper) Remove(index int) {
+	heap.Remove(&w.heapinterface, index)
 }
 
 // heapinterface handles dirty low-level details of managing the priority queue.
