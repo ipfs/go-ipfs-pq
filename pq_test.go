@@ -53,10 +53,11 @@ func TestCorrectnessOfPop(t *testing.T) {
 	var priorities []int
 	var peekPriorities []int
 	for q.Len() > 0 {
-		i := q.Pop().(*TestElem).Priority
-		t.Logf("popped %v", i)
-		priorities = append(priorities, i)
+		i := q.Peek().(*TestElem).Priority
 		peekPriorities = append(peekPriorities, i)
+		j := q.Pop().(*TestElem).Priority
+		t.Logf("popped %v", j)
+		priorities = append(priorities, j)
 	}
 	if !sort.IntsAreSorted(peekPriorities) {
 		t.Fatal("the values were not returned in sorted order")
