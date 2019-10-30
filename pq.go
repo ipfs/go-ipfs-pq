@@ -7,8 +7,10 @@ import "container/heap"
 type PQ interface {
 	// Push adds the ele
 	Push(Elem)
-	// Pop returns the highest priority Elem in PQ.
+	// Pop removes and returns the highest priority Elem in PQ.
 	Pop() Elem
+	// Peek returns the highest priority Elem in PQ (without removing it).
+	Peek() Elem
 	// Len returns the number of elements in the PQ.
 	Len() int
 	// Update `fixes` the PQ.
@@ -54,6 +56,13 @@ func (w *wrapper) Push(e Elem) {
 
 func (w *wrapper) Pop() Elem {
 	return heap.Pop(&w.heapinterface).(Elem)
+}
+
+func (w *wrapper) Peek() Elem {
+	if len(w.heapinterface.elems) == 0 {
+		return nil
+	}
+	return w.heapinterface.elems[0].(Elem)
 }
 
 func (w *wrapper) Update(index int) {
