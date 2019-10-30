@@ -51,10 +51,12 @@ func TestCorrectnessOfPop(t *testing.T) {
 		q.Push(&e)
 	}
 	var priorities []int
+	var peekPriorities []int
 	for q.Len() > 0 {
 		i := q.Pop().(*TestElem).Priority
 		t.Logf("popped %v", i)
 		priorities = append(priorities, i)
+		peekPriorities = append(peekPriorities, i)
 	}
 	if !sort.IntsAreSorted(priorities) {
 		t.Fatal("the values were not returned in sorted order")
@@ -73,12 +75,18 @@ func TestUpdate(t *testing.T) {
 	q.Push(middle)
 	q.Push(highest)
 	q.Push(lowest)
+	if q.Peek().(*TestElem).Key != highest.Key {
+		t.Fatal("head element doesn't have the highest priority")
+	}
 	if q.Pop().(*TestElem).Key != highest.Key {
 		t.Fatal("popped element doesn't have the highest priority")
 	}
 	q.Push(highest)           // re-add the popped element
 	highest.Priority = 0      // update the PQ
 	q.Update(highest.Index()) // fix the PQ
+	if q.Peek().(*TestElem).Key != middle.Key {
+		t.Fatal("middle element should now have the highest priority")
+	}
 	if q.Pop().(*TestElem).Key != middle.Key {
 		t.Fatal("middle element should now have the highest priority")
 	}
