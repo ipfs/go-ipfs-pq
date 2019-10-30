@@ -58,8 +58,11 @@ func TestCorrectnessOfPop(t *testing.T) {
 		priorities = append(priorities, i)
 		peekPriorities = append(peekPriorities, i)
 	}
-	if !sort.IntsAreSorted(priorities) {
+	if !sort.IntsAreSorted(peekPriorities) {
 		t.Fatal("the values were not returned in sorted order")
+	}
+	if !sort.IntsAreSorted(priorities) {
+		t.Fatal("the popped values were not returned in sorted order")
 	}
 }
 
