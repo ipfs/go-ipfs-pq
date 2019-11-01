@@ -67,6 +67,28 @@ func TestCorrectnessOfPop(t *testing.T) {
 	}
 }
 
+func TestRemove(t *testing.T) {
+	q := New(PriorityComparator)
+	tasks := []TestElem{
+		{Key: "a", Priority: 9},
+		{Key: "b", Priority: 4},
+		{Key: "c", Priority: 3},
+	}
+	for i := range tasks {
+		q.Push(&tasks[i])
+	}
+	removed := q.Remove(1).(*TestElem)
+	if q.Len() != 2 {
+		t.Fatal("expected item to have been removed")
+	}
+	if q.Pop().(*TestElem).Key == removed.Key {
+		t.Fatal("Remove() returned wrong element")
+	}
+	if q.Pop().(*TestElem).Key == removed.Key {
+		t.Fatal("Remove() returned wrong element")
+	}
+}
+
 func TestUpdate(t *testing.T) {
 	t.Log(`
 	Add 3 elements.

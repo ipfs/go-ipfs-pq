@@ -11,13 +11,12 @@ type PQ interface {
 	Pop() Elem
 	// Peek returns the highest priority Elem in PQ (without removing it).
 	Peek() Elem
+	// Remove removes the item at the given index from the PQ.
+	Remove(index int) Elem
 	// Len returns the number of elements in the PQ.
 	Len() int
 	// Update `fixes` the PQ.
 	Update(index int)
-
-	// TODO  explain why this interface should not be extended
-	// It does not support Remove. This is because...
 }
 
 // Elem describes elements that can be added to the PQ. Clients must implement
@@ -63,6 +62,10 @@ func (w *wrapper) Peek() Elem {
 		return nil
 	}
 	return w.heapinterface.elems[0].(Elem)
+}
+
+func (w *wrapper) Remove(index int) Elem {
+	return heap.Remove(&w.heapinterface, index).(Elem)
 }
 
 func (w *wrapper) Update(index int) {
