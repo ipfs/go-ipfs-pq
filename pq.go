@@ -61,7 +61,7 @@ func (w *wrapper) Peek() Elem {
 	if len(w.heapinterface.elems) == 0 {
 		return nil
 	}
-	return w.heapinterface.elems[0].(Elem)
+	return w.heapinterface.elems[0]
 }
 
 func (w *wrapper) Remove(index int) Elem {
