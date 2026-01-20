@@ -1,7 +1,7 @@
 package pq
 
 import (
-	"sort"
+	"slices"
 	"testing"
 )
 
@@ -59,11 +59,19 @@ func TestCorrectnessOfPop(t *testing.T) {
 		t.Logf("popped %v", j)
 		priorities = append(priorities, j)
 	}
-	if !sort.IntsAreSorted(peekPriorities) {
-		t.Fatal("the values were not returned in sorted order")
+
+	expectedPrios := make([]int, 0, len(tasks))
+	for _, e := range tasks {
+		expectedPrios = append(expectedPrios, e.Priority)
 	}
-	if !sort.IntsAreSorted(priorities) {
-		t.Fatal("the popped values were not returned in sorted order")
+	slices.Sort(expectedPrios)
+	slices.Reverse(expectedPrios)
+
+	if !slices.Equal(peekPriorities, expectedPrios) {
+		t.Fatal("wrong priorities returned, expected", expectedPrios, "got", peekPriorities)
+	}
+	if !slices.Equal(priorities, expectedPrios) {
+		t.Fatal("wrong priorities in popped values, expected", expectedPrios, "got", priorities)
 	}
 }
 
